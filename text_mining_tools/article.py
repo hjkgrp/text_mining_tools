@@ -1,6 +1,5 @@
 #!/usr/local/bin/python
-# Class written by Aditya Nandy
-
+# Class written by Aditya Nandy for Kulik Group
 from articledownloader.articledownloader import ArticleDownloader
 from bs4 import BeautifulSoup, NavigableString
 from nltk import sent_tokenize
@@ -60,6 +59,10 @@ class Article:
         self.check_dir()
         self.elsevier_key = elsevier_key
         self.download_article()
+
+        # The class will stop at downloading the article
+        # To do analysis, you would have to read the article
+        # and break it apart into its pieces.
 
     def check_dir(self, append_to_basepath=False):
         if not os.path.exists(self.basepath):
@@ -466,10 +469,12 @@ class Article:
         self.get_cited_papers()
 
     def populate_paper_by_section(self):
+        self.read_paper()
         self.get_section_names()
         self.get_section_text()
 
     def populate_figure_and_table_captions(self):
+        self.read_paper()
         self.get_table_captions()
         self.get_figure_captions()
 
