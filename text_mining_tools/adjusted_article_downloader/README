@@ -1,1 +1,3 @@
-These are locally changed files from the article_downloader from the Olivetti group. They are adjusted for python3.
+These are locally changed files from the article_downloader from the Olivetti group. They are adjusted for python3, 
+and tweaked for more limited queries (relevant for Kulik group's purposes on limiting journals).
+Replace these whereever your article_downloader install is.
