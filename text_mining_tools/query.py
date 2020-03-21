@@ -1,13 +1,13 @@
 #!/usr/local/bin/python
+# class written by Aditya Nandy for Kulik Group
 from articledownloader.articledownloader import ArticleDownloader
 from pybliometrics.scopus import ScopusSearch
 from text_mining_tools.article import Article
 from requests.utils import quote
+from csv import reader
 import itertools
 import pandas as pd
-from csv import reader
 import os
-# class written by Aditya Nandy
 '''
 The query class takes in a list of query words.
 It then produces a set of "results," which are hits
@@ -116,7 +116,6 @@ class Query:
         else:
             issns = [self.map_journal_to_ISSN(
                 journal=val) for val in self.journal_limit]
-        print(issns)
         self.issns = issns
         for query in queries:
             for issn in issns:
