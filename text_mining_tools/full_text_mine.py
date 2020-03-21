@@ -1,4 +1,5 @@
 #!/usr/local/bin/python
+# functions written by Aditya Nandy for Kulik Group
 from text_mining_tools.query import Query
 from text_mining_tools.article import Article
 import pickle
@@ -38,6 +39,7 @@ def execute_query(basepath, keywords, elsevier_key=None,journal_limit=False, \
     pickle_name = name_pickle(query_name=query_name)
     filename = open(str(basepath)+'/AnalyzedResults/'+str(pickle_name), 'wb')
     pickle.dumps(my_query, filename)
+    return my_query
 
 def VADER_analysis(sentences, keywords):
     ##### This helper function takes sentences that are already broken apart.
