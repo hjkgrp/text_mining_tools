@@ -53,7 +53,8 @@ The query class allows setting journal limitations
 class Query:
     def __init__(self, basepath, keywords, elsevier_key=None,
                  journal_limit=False, number_of_results=10000,
-                 automate_download=False, analyze_downloaded=False):
+                 automate_download=False, analyze_downloaded=False,
+                 query_result_path=False):
         # basepath is an ABSOLUTE PATH where the corpus of papers
         #                will be stored.
         # keywords is a LIST of arguments that will be searched for.
@@ -82,7 +83,7 @@ class Query:
         self.number_of_results = number_of_results
         self.query_results = None
         self.deduplicated_results = None
-        self.execute_queries()
+        self.execute_queries(query_result_path=query_result_path)
         if automate_download:
             reply = str(input('You are about to download '+\
                               str(number_of_results)+ \
@@ -101,7 +102,7 @@ class Query:
                     article_dict[doi] = this_article
                 self.article_dict = article_dict
 
-    def execute_queries(self):
+    def execute_queries(self, query_result_path = False):
         downloader = ArticleDownloader(self.elsevier_key, timeout_sec=150)
         dois = []
         query_list = []
@@ -146,6 +147,9 @@ class Query:
         doi_list['issn'] = issn_list
         doi_list['query'] = query_list
         doi_list['api'] = found_by
+        if query_result_path:
+            # This must be an absolute path to something ending in .csv.
+            doi_list.to_csv(query_result_path)
         print(doi_list)
         print('----')
         dropped_doi_list = doi_list.drop_duplicates(subset=['doi'],keep='first')
