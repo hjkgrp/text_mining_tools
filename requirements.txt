@@ -3,3 +3,4 @@ articledownloader
 requests
 pybliometrics
 pandas
+Autologging
