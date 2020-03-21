@@ -1,0 +1,5 @@
+nltk
+articledownloader
+requests
+pybliometrics
+pandas
