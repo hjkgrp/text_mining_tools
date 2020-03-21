@@ -264,7 +264,9 @@ class Article:
             for val in figures:
                 temp = val.get_text()
                 if ('fig' in temp.lower()) and (temp.lower() not in checked):
-                    checked.add(temp.lower().replace('Open in figure viewerPowerPoint',''))
+                    new_temp = temp.lower().replace('Open in figure viewerPowerPoint','')
+                    clean_text = self.clean_text(new_temp)
+                    checked.add(clean_text)
                     counter += 1
                     caption_dict[counter] = temp
         self.figure_captions = caption_dict
@@ -415,7 +417,7 @@ class Article:
         if self.getter == 'wiley':
             temp = self.f.find_all('div', attrs={'class': 'abstract-group'})
             if len(temp)>0:
-                abstract = temp[0]['content']
+                abstract = temp[0].get_text().strip()
         if (self.getter in ['rsc','acs']):
             if (len(temp) > 0):
                 abstract = temp[0].get_text()
