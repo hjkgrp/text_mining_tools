@@ -17,7 +17,7 @@ Each of these DOIs can then be instantiated as an
 article class and downloaded to a custom path.
 
 I have purposefully separated out the query class
-from the article class. a given query class can 
+from the article class. A given query class can 
 help you keep track of the articles that are associated
 with it. For instance, let's say I want to find articles
 that have Mn(acac)3 in them (or are associated somehow).
@@ -33,14 +33,17 @@ Doing so will block MIT's access, so I have purposefully
 included protections against automated downloads for acs
 publications.
 
-The query class will then be saved as a json file,
+The query class will then be saved as a pickle file,
 which will contain keywords used during the search,
 databases searched, and the DOIs that resulted (along)
 with the custom path. From the query class, you can 
 get all articles associated with a given set of keywords.
 
 The query class hierarchically holds the article class
-(in the same way a mol3D holds an atom3D).
+(in the same way a mol3D holds an atom3D). It is entirely
+separable from the Article class. If you wanted to analyze
+just a few papers, you could do that readily with some simple
+Article classes.
 
 The query class allows setting journal limitations 
 (so that you do not query broadly, should you choose.) 
