@@ -20,30 +20,32 @@ The file structure of our corpus is the following:
         |       |---paper1.html
         |       |---paper2.html
         |------AnalyzedResults
-                    |---<doi-here>.json
+                    |---query_1.pickle
+                    |---doi_1.pickle
 
-Each ISSN will make a single path where the file will be downloaded. 
-We sort this by publisher, and then journals. After the article is
+Each DOI prefix will make a single path where the file will be
+downloaded. We sort this by publisher. After the article is
 downloaded, then we can analyze the article by "containerizing" it 
-and inspecting its parts. If the file is analyzed and stored, it is
-dumped as a json file, which can be turned into a dictionary when
-loaded in.
+and inspecting its parts. If the file is analyzed and stored, the 
+Article class can be pickled for later use.
 
-This class will assume that you are working with HTML pages.
+This class will assume that you are working with scraped HTML pages.
 You can do this readily with nearly all files EXCEPT ACS.
 We have been *EXPLICITLY* told by the library NOT to scrape 
 ACS websites, which is in violation with ACS policy. If you need
 lots of ACS papers (more than can be downloaded by hand), talk
 to Aditya, who has signed the ACS license agreement and thus can
-get you a zip of the XML files from ACS.
+get you a zip of the XML files from ACS. It should be fine to 
+download HTML versions of ACS articles for analysis. 
 
 Once a corpus is constructed that consists of a set of papers,
 we can do various types of analysis. Sentiment analysis may be
 particularly relevant for looking at properties (can tell you)
 whether or not the sentiment in a sentence is positive or 
-negative. 
+negative. This class prepares the article for things like
+sentiment analysis or utilities.
 
-Curreently, I have set up support for articles in nature, RSC,
+Currently, I have set up support for articles in nature, RSC,
 and wiley journals. ACS journals require more explicit access.
 """
 
