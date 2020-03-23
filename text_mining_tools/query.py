@@ -85,11 +85,11 @@ class Query:
         self.deduplicated_results = None
         self.execute_queries(query_result_path=query_result_path)
         if automate_download:
-            reply = str(input('You are about to download '+\
-                              str(number_of_results)+ \
-                              'is this truly what you want? \
-                              (recommended < 1000). \
-                               (y/n): ')).lower().strip()
+            reply = str(input('You are about to download '+
+                              str(number_of_results)+ 
+                              'is this truly what you want? '
+                              '(recommended < 1000). '
+                               '(y/n): ')).lower().strip()
             if reply[0] == 'n':
                 print('Will not download papers at this time.')
             elif reply[0] == 'y':
@@ -135,11 +135,11 @@ class Query:
                         scopus_dois = df['doi'].tolist()
                         found_by += ['scopus']*len(scopus_dois)
                         downloader_dois += scopus_dois
-                    dois += downloader_dois
-                    query_list += [query]*len(downloader_dois)
-                    journal_list += ([str(self.map_journal_to_ISSN(issn=issn))] *
-                                     len(downloader_dois))
-                    issn_list += [issn]*len(downloader_dois)
+                dois += downloader_dois
+                query_list += [query]*len(downloader_dois)
+                journal_list += ([str(self.map_journal_to_ISSN(issn=issn))] *
+                                 len(downloader_dois))
+                issn_list += [issn]*len(downloader_dois)
         merged = list(itertools.chain.from_iterable(dois))
         doi_list = pd.DataFrame()
         doi_list['doi'] = dois
@@ -304,6 +304,9 @@ class Query:
         # This bound method turns a colloquialism into the real abbreviation.
         colloquial_dict = {'acr': 'acc_chem_res',
                            'angew': 'angew_chem_int_ed',
+                           'chemsci':'chem_sci',
+                           'chemrev':'chem_rev',
+                           'cs':'chem_sci',
                            'cgd': 'cryst_growth_des',
                            'ic': 'inorg_chem',
                            'iecr': 'ind_eng_chem_res',
@@ -314,13 +317,17 @@ class Query:
                            'jpcl': 'j_phys_chem_lett',
                            'nature_comm': 'nat_commun',
                            'nat_comm': 'nat_commun',
+                           'natcomm': 'nat_commun',
                            'nature_chem': 'nat_chem',
+                           'natchem': 'nat_chem',
                            'nat_mat': 'nat_mater',
+                           'natmat':'nat_mater',
                            'nature_mat': 'nat_mater'}
         if abbreviation not in colloquial_dict.keys():
             mapping_to_return = abbreviation
         else:
             mapping_to_return = colloquial_dict[abbreviation]
+        print('mapping_to_return',mapping_to_return)
         return mapping_to_return
 
     def issn_to_doi_prefix_mapper(self, issn):
