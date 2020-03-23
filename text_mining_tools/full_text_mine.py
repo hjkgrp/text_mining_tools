@@ -3,7 +3,7 @@
 from text_mining_tools.query import Query
 from text_mining_tools.article import Article
 import pickle
-import glob
+import glob, os
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
@@ -36,9 +36,9 @@ def execute_query(basepath, keywords, elsevier_key=None,journal_limit=False, \
     my_query = Query(basepath=basepath, keywords=keywords, 
                      elsevier_key=elsevier_key, journal_limit=journal_limit,
                      number_of_results=number_of_results,automate_download=automate_download)
-    pickle_name = name_pickle(query_name=query_name)
+    pickle_name = name_pickle(basepath, query_name=query_name)
     filename = open(str(basepath)+'/AnalyzedResults/'+str(pickle_name), 'wb')
-    pickle.dumps(my_query, filename)
+    pickle.dump(my_query, filename)
     return my_query
 
 def VADER_analysis(sentences, keywords):
@@ -48,10 +48,12 @@ def VADER_analysis(sentences, keywords):
     # Input sentences should be a list of sentences. Readily provided by the
     #       Article class.
     # Input keywords should be a list of keywords.
+    if not isinstance(keywords,list):
+        keywords = [keywords]
     kw_found = False
     kw_in_list = []
     polarity_list = []
-    for sent_num, sent in enumerate(sent_text):
+    for sent_num, sent in enumerate(sentences):
         if any([val in sent for val in keywords]):
             if any([('not '+val) in sent for val in keywords]):
                 kw_found = False
@@ -60,7 +62,7 @@ def VADER_analysis(sentences, keywords):
                 kw_found = True
     if kw_found: # Do not do analysis if kw not found.
         sid = SentimentIntensityAnalyzer()
-        for sentence in sent_text:
+        for sentence in sentences:
             ss = sid.polarity_scores(sentence)
             polarity_list.append(ss['compound'])
     # Returns two lists, one that contains indices of keyword containing
@@ -75,8 +77,19 @@ def preprocess(sent):
     sent = nltk.pos_tag(sent)
     return sent
 
-def name_pickle(query_name = False):
-    if query_name:
+def name_pickle(basepath, query_name = False):
+    if query_name != False:
+        existing_analyzed_files = glob.glob(str(basepath)+'/AnalyzedResults/'+str(query_name)+'.pickle')
+        if len(existing_analyzed_files) != 0:
+            maxval = 0
+            for analyzed in existing_analyzed_files:
+                analyzed_basename = os.path.basename(analyzed)
+                temp = analyzed_basename.split('.pickle')[0]
+                if '_' in temp:
+                    current_val = temp.split('_')[1]
+                    if current_val > maxval:
+                        maxval = current_val
+            query_name = str(query_name)+'_'+str(maxval+1)+'.pickle'
         if 'pickle' not in query_name:
             query_name += '.pickle'
         pickle_name = query_name
@@ -87,7 +100,8 @@ def name_pickle(query_name = False):
         else:
             maxval = 0
             for analyzed in existing_analyzed_files:
-                current_val = int(analyzed.split('_')[1].split('.')[0])
+                analyzed_basename = os.path.basename(analyzed)
+                current_val = int(analyzed_basename.split('_')[1].split('.')[0])
                 if current_val > maxval:
                     maxval = current_val
             pickle_name = 'query_'+str(maxval+1)+'.pickle'
