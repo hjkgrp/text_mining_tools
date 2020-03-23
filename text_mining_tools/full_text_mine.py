@@ -30,16 +30,26 @@ def execute_query(basepath, keywords, elsevier_key=None,journal_limit=False, \
     # query_name is the name of the query class that will be 
     #                written to basepath/AnalyzedResults/.
     #                If nothing is provided, will be query0,
-    #                query1, query2, etc. Stored as json.
+    #                query1, query2, etc. Stored as pickle.
     # number_of_results is PER JOURNAL.
-    # This function instantiates a query, then stores the query as a JSON.
+    # This function instantiates a query, then stores the query as a pickle.
     my_query = Query(basepath=basepath, keywords=keywords, 
                      elsevier_key=elsevier_key, journal_limit=journal_limit,
                      number_of_results=number_of_results,automate_download=automate_download)
-    pickle_name = name_pickle(basepath, query_name=query_name)
+    pickle_name = name_pickle(basepath, name=query_name)
     filename = open(str(basepath)+'/AnalyzedResults/'+str(pickle_name), 'wb')
     pickle.dump(my_query, filename)
     return my_query
+
+def pickle_object(basepath, python_class, name=False, query=True):
+    # name is the name of the query or article class that will be 
+    #                written to basepath/AnalyzedResults/.
+    #                If nothing is provided, will be query0,
+    #                query1, query2, etc. Stored as picklee.
+    pickle_name = name_pickle(basepath, name=query_name)
+    filename = open(str(basepath)+'/AnalyzedResults/'+str(pickle_name), 'wb')
+    pickle.dump(python_class, filename)
+    return query
 
 def VADER_analysis(sentences, keywords):
     ##### This helper function takes sentences that are already broken apart.
@@ -77,9 +87,10 @@ def preprocess(sent):
     sent = nltk.pos_tag(sent)
     return sent
 
-def name_pickle(basepath, query_name = False):
-    if query_name != False:
-        existing_analyzed_files = glob.glob(str(basepath)+'/AnalyzedResults/'+str(query_name)+'.pickle')
+def name_pickle(basepath, name = False, query = True):
+    # if query == False, assumes article.
+    if name != False:
+        existing_analyzed_files = glob.glob(str(basepath)+'/AnalyzedResults/'+str(name)+'.pickle')
         if len(existing_analyzed_files) != 0:
             maxval = 0
             for analyzed in existing_analyzed_files:
@@ -89,14 +100,20 @@ def name_pickle(basepath, query_name = False):
                     current_val = temp.split('_')[1]
                     if current_val > maxval:
                         maxval = current_val
-            query_name = str(query_name)+'_'+str(maxval+1)+'.pickle'
-        if 'pickle' not in query_name:
-            query_name += '.pickle'
-        pickle_name = query_name
+            name = str(name)+'_'+str(maxval+1)+'.pickle'
+        if 'pickle' not in name:
+            name += '.pickle'
+        pickle_name = name
     else:
-        existing_analyzed_files = glob.glob(str(basepath)+'/AnalyzedResults/query_*pickle')
+        if query:
+            existing_analyzed_files = glob.glob(str(basepath)+'/AnalyzedResults/query_*pickle')
+        else:
+            existing_analyzed_files = glob.glob(str(basepath)+'/AnalyzedResults/article_*pickle')
         if len(existing_analyzed_files) == 0:
-            pickle_name = 'query_1.pickle'
+            if query:
+                pickle_name = 'query_1.pickle'
+            else:
+                pickle_name = 'article_1.pickle'
         else:
             maxval = 0
             for analyzed in existing_analyzed_files:
@@ -104,7 +121,10 @@ def name_pickle(basepath, query_name = False):
                 current_val = int(analyzed_basename.split('_')[1].split('.')[0])
                 if current_val > maxval:
                     maxval = current_val
-            pickle_name = 'query_'+str(maxval+1)+'.pickle'
+            if query:
+                pickle_name = 'query_'+str(maxval+1)+'.pickle'
+            else:
+                pickle_name = 'article_'+str(maxval+1)+'.pickle'
     return pickle_name
 
 
