@@ -4,7 +4,6 @@ from articledownloader.articledownloader import ArticleDownloader
 from bs4 import BeautifulSoup, NavigableString
 from nltk import sent_tokenize
 import re, os
-import os
 import pandas as pd
 """
 The article class takes in a DOI and a basepath for constructing a corpus.
@@ -157,6 +156,7 @@ class Article:
             f = BeautifulSoup(html_doc, 'html.parser')
             self.f = f
             self.original_f = f  # This is the original soup doc. Do not touch.
+            os.remove("temp.html")
         else:
             raise AssertionError('This paper does not exist at '+\
                                 str(self.basepath) +str(prefix) + \
