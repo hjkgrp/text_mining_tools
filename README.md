@@ -6,3 +6,9 @@ These tools contain two major classes:
 2. An Article class, which allows operations to be performed on a given doi (from downloading to manipulations).
 
 Currently, Wiley, ACS, RSC, Nature, and Science publications are supported by default.
+
+```python
+# install dependencies with the following
+pip3 install -r requirements.txt 
+```
+After finding your articledownloader install, you will have to replace two files, which are stored locally in this repo.
