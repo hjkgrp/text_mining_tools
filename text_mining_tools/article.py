@@ -480,12 +480,13 @@ class Article:
         self.get_table_captions()
         self.get_figure_captions()
 
-    def full_analysis(self):
+    def full_analysis(self, get_full_paper=True):
         self.populate_metadata()
         self.populate_paper_by_section()
         self.populate_figure_and_table_captions()
         self.read_table_data()
-        self.populate_full_paper()
+        if get_full_paper:
+            self.populate_full_paper()
 
     def clean_text(self, text):
         # Currently, text is ridded of these characters,
