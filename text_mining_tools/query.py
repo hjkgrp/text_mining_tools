@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 # class written by Aditya Nandy for Kulik Group
-from articledownloader.articledownloader import ArticleDownloader
+from adjusted_article_downloader.articledownloader import ArticleDownloader
 from pybliometrics.scopus import ScopusSearch
 from text_mining_tools.article import Article
 from requests.utils import quote
