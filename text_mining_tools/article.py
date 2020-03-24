@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 # Class written by Aditya Nandy for Kulik Group
-from adjusted_article_downloader.articledownloader import ArticleDownloader
+from articledownloader.articledownloader import ArticleDownloader
 from bs4 import BeautifulSoup, NavigableString
 from nltk import sent_tokenize
 import re, os
