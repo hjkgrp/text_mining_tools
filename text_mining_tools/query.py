@@ -52,7 +52,7 @@ The query class allows setting journal limitations
 
 class Query:
     def __init__(self, basepath, keywords, elsevier_key=None,
-                 journal_limit=False, number_of_results=10000,
+                 journal_limit=[], number_of_results=10000,
                  automate_download=False, analyze_downloaded=False,
                  query_result_path=False):
         # basepath is an ABSOLUTE PATH where the corpus of papers
@@ -112,7 +112,7 @@ class Query:
         rows = self.number_of_results  # Number of results
         queries = self.prep_queries()
         print('THESE ARE THE QUERIES',queries)
-        if (not self.journal_limit):
+        if (len(self.journal_limit)==0):
             issns = self.map_journal_to_ISSN(get_keys=True)
         else:
             issns = [self.map_journal_to_ISSN(
@@ -270,7 +270,7 @@ class Query:
             # This is invoked if all possible journals are
             # to be queried. Returns the ISSNs of all possible
             # journals in the list.
-            return issn_dict.keys()
+            return list(issn_dict.keys())
         else:
             journal_to_ISSN_map = None
             if issn and journal:
