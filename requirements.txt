@@ -1,4 +1,5 @@
 nltk
+beautifulsoup4
 articledownloader
 requests
 pybliometrics
