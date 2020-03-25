@@ -11,7 +11,9 @@ Currently, Wiley, ACS, RSC, Nature, and Science publications are supported by de
 # install dependencies with the following
 pip3 install -r requirements.txt 
 ```
-After finding your articledownloader install, you will have to replace two files, which are stored locally in this repo.
+<strong>
+After finding your articledownloader install, you will have to replace two files, which are stored locally in this repo (under adjusted_article_downloader/. To do this, find where your article downloader install is. Then, replace the two files under that path. They should be replacing two scripts (articledownloader.py & scrapers.py), which will be under .../articledownloader/. To sanity check, this folder should contain .../articledownloader/__init__.py.
+<\strong>
 
 Note: The first time you install the NLTK package, you will need to manually install subpackages. This can easily
 be done by opening up NLTK in a python and doing the following imports.
