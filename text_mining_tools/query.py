@@ -186,7 +186,7 @@ class Query:
                 if not os.path.exists(self.basepath.rstrip('/')+'/'+append_to_basepath):
                     os.mkdir(self.basepath.rstrip('/')+'/'+append_to_basepath)
 
-    def map_journal_to_ISSN(self, journal=False, issn=False, get_keys=False):
+    def map_journal_to_ISSN(self, journal=False, issn=False, get_keys=False, get_dict=False):
         issn_dict = {'2155-5435': ['acs_catalysis',
                                    'acs_catal'],
                      '1520-4898': ['accounts_for_chemical_research',
@@ -215,7 +215,7 @@ class Query:
                                    'cryst_growth_des'],
                      '0887-0624': ['energy_and_fuels',
                                    'energy_fuels'],
-                     '1520-5851': ['environmenental_science_and_technology',
+                     '1520-5851': ['environmental_science_and_technology',
                                    'environ_sci_technol'],
                      '0888-5885': ['industrial_engineering_and_chemistry_research',
                                    'ind_eng_chem_res'],
@@ -266,6 +266,8 @@ class Query:
                      '1095-9203': ['science'],
                      '2375-2548': ['science_advances',
                                    'sci_adv']}
+        if get_dict:
+        	return issn_dict
         if get_keys:
             # This is invoked if all possible journals are
             # to be queried. Returns the ISSNs of all possible
@@ -300,8 +302,25 @@ class Query:
                         break
             return journal_to_ISSN_map
 
+    def available_journals(self, issn=False):
+    	issn_dict = self.map_journal_to_ISSN(get_dict=True)
+    	if issn:
+    		# This returns a list of ISSNs of journals that can be automatically
+    		# downloaded and potentially mined. Just because an automated download
+    		# can happen does not mean that the text can be mined easily. (i.e.
+    		# Science papers can be downloaded but not mined because they are
+    		# PDFs, not HTML texts.)
+    		return list(issn_dict.keys())
+    	else:
+    		# This flattens into a list of journals and abbreviations
+    		# that can be easily mined.
+    		journals = list(issn_dict.values())
+    		return [item for sublist in journals for item in sublist]
+
+
     def colloquial_mapping(self, abbreviation):
         # This bound method turns a colloquialism into the real abbreviation.
+        # If you plan on using informal abbreviations, look here.
         colloquial_dict = {'acr': 'acc_chem_res',
                            'angew': 'angew_chem_int_ed',
                            'chemsci':'chem_sci',
