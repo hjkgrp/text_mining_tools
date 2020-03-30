@@ -1,6 +1,7 @@
 #!/usr/local/bin/python
 # Class written by Aditya Nandy for Kulik Group
 from articledownloader.articledownloader import ArticleDownloader
+from pybliometrics.scopus import AbstractRetrieval
 from bs4 import BeautifulSoup, NavigableString
 from nltk import sent_tokenize
 import re, os
@@ -403,24 +404,32 @@ class Article:
         self.section_text_dict_sentences = section_text_dict_sentences
         return section_text_dict, section_text_dict_sentences
 
-    def get_abstract(self):
+    def get_abstract(self, from_scopus = False):
         abstract = False
         abstract_sentences = []
-        if self.getter == 'rsc':
-            temp = self.f.find_all('p', attrs={'class': 'abstract'})
-        if self.getter == 'acs':
-            temp = self.f.find_all('p', attrs={'class': 'articleBody_abstractText'})
-        if self.getter == 'nature':
-            temp = self.f.find_all('meta', attrs={'name': 'description'})
-            if len(temp)>0:
-                abstract = temp[0]['content']
-        if self.getter == 'wiley':
-            temp = self.f.find_all('div', attrs={'class': 'abstract-group'})
-            if len(temp)>0:
-                abstract = temp[0].get_text().strip()
-        if (self.getter in ['rsc','acs']):
-            if (len(temp) > 0):
-                abstract = temp[0].get_text()
+        if from_scopus:
+            try:
+                abstract_dict = AbstractRetrieval(self.doi)
+            except:
+                print('Failed to get abstract via SCOPUS API for '+str(self.doi))
+                return abstract, abstract_sentences
+            abstract = abstract_dict.description
+        if not from_scopus:
+            if self.getter == 'rsc':
+                temp = self.f.find_all('p', attrs={'class': 'abstract'})
+            if self.getter == 'acs':
+                temp = self.f.find_all('p', attrs={'class': 'articleBody_abstractText'})
+            if self.getter == 'nature':
+                temp = self.f.find_all('meta', attrs={'name': 'description'})
+                if len(temp)>0:
+                    abstract = temp[0]['content']
+            if self.getter == 'wiley':
+                temp = self.f.find_all('div', attrs={'class': 'abstract-group'})
+                if len(temp)>0:
+                    abstract = temp[0].get_text().strip()
+            if (self.getter in ['rsc','acs']):
+                if (len(temp) > 0):
+                    abstract = temp[0].get_text()
         if abstract:
             abstract_replaced = self.clean_text(abstract)
             abstract_replaced = abstract_replaced.lower()
