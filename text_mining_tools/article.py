@@ -50,7 +50,7 @@ and wiley journals. ACS journals require more explicit access.
 
 
 class Article:
-    def __init__(self, doi, basepath, elsevier_key=False):
+    def __init__(self, doi, basepath, elsevier_key=False, download=True):
         self.doi = doi
         self.split_doi()
         self.basepath = basepath
@@ -58,7 +58,8 @@ class Article:
             self.basepath = self.basepath.strip() + '/'
         self.check_dir()
         self.elsevier_key = elsevier_key
-        self.download_article()
+        if download:
+            self.download_article()
 
         # The class will stop at downloading the article
         # To do analysis, you would have to read the article
@@ -92,7 +93,7 @@ class Article:
             new_df['doi'] = doilist
             new_df.to_csv(self.basepath+str(prefix)+\
                 '/not_automatically_downloaded.csv',index=False)
-        elif getter == 'acs':
+        elif getter == 'acs_temporarily_skipping':
             print('ACS pub. Not downloading, you can download manually!',self.doi)
             # We cannot automate ACS downloads, do NOT try to overcome this.
             new_df = pd.DataFrame()
@@ -114,19 +115,55 @@ class Article:
                              '/'+str(rest)+'.html'):
                 downloader = ArticleDownloader(
                     str(self.elsevier_key), timeout_sec=150)
-                temp_file = open(self.basepath+str(prefix) +
+                try:
+                    temp_file = open(self.basepath+str(prefix) +
                                  '/'+str(rest)+'.html', 'wb')
-                downloader.get_html_from_doi(self.doi, temp_file, getter)
-                temp_file.close()
+                    downloader.get_html_from_doi(self.doi, temp_file, getter)
+                    temp_file.close()
+                    failed = False
+                except:
+                    failed = True
+                if failed or (os.stat(self.basepath+str(prefix) +
+                                 '/'+str(rest)+'.html').st_size == 0):
+                    try:
+                        os.remove(self.basepath+str(prefix) +
+                                 '/'+str(rest)+'.html')
+                    except:
+                        print('nothing to remove')
+                    new_df = pd.DataFrame()
+                    doilist = []
+                    if os.path.exists(self.basepath+str(prefix)+\
+                        '/not_automatically_downloaded.csv'):
+                        not_auto_download = pd.read_csv(self.basepath+str(prefix)+\
+                            '/not_automatically_downloaded.csv')
+                        doilist = not_auto_download['doi'].tolist()
+                    doilist.append(self.doi)
+                    doilist = list(set(doilist))
+                    new_df['doi'] = doilist
+                    new_df.to_csv(self.basepath+str(prefix)+\
+                        '/not_automatically_downloaded.csv',index=False)
 
     def split_doi(self):
         prefix = str(self.doi.split('/', 1)[0]).strip()
         rest = str(self.doi.split('/', 1)[1]).strip()
         getter_dict = {'10.1039': 'rsc',
                        '10.1002': 'wiley',
+                       '10.1111': 'wiley',
+                       '10.1560': 'wiley',
+                       '10.1562': 'wiley',
                        '10.1038': 'nature',
+                       '10.1295': 'nature',
+                       '10.1013': 'nature',
+                       '10.1057': 'nature',
                        '10.1126': 'aaas',
-                       '10.1021': 'acs'}
+                       '10.1021': 'acs',
+                       '10.1006': 'elsevier',
+                       '10.1016': 'elsevier',
+                       '10.1529': 'elsevier',
+                       '10.1007': 'springer',
+                       '10.1023': 'springer',
+                       '10.1134': 'springer',
+                       '10.1163': 'springer'}
         if prefix not in getter_dict.keys():
             getter = None
         else:
