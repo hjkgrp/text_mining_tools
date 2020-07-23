@@ -93,7 +93,7 @@ class Article:
             new_df['doi'] = doilist
             new_df.to_csv(self.basepath+str(prefix)+\
                 '/not_automatically_downloaded.csv',index=False)
-        elif getter == 'acs_temporarily_skipping':
+        elif getter == 'acs':
             print('ACS pub. Not downloading, you can download manually!',self.doi)
             # We cannot automate ACS downloads, do NOT try to overcome this.
             new_df = pd.DataFrame()
