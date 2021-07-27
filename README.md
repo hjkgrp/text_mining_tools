@@ -47,8 +47,6 @@ from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 ```
 
-This will prompt you for the necessary downloads, after which you should be able to use the package freely. It may ask you to install the "punkt" package. Please follow the install recommendations that are spawned.
-
 Currently, python 3.6 is recommended for this package.
 
 *** Note: Please set aside a hard disk with plenty of space if you are planning automated downloads. ***
