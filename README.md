@@ -20,9 +20,16 @@ Next, install the package.
 python setup.py develop
 ```
 
-<strong>
-After finding your articledownloader install, you will have to replace two files, which are stored locally in this repo (under adjusted_article_downloader/). To do this, find where your article downloader install is (likely to be in ```<<anaconda-path>>/envs/<<conda-env-name>>/lib/python3.6/site-packages/articledownloader```). Then, replace the two files under that path. We need to replace two scripts (articledownloader.py & scrapers.py), which will be under articledownloader/ in the above path. Copy the files from adjusted_article_downloader/ to replace the equivalent files in <anaconda-path>/envs/<conda-env-name>/python3.6/site-packages/articledownloader. If you installed inside of a conda environment (recommended!), "envs/<your-conda-env-name-here>" should be in your path, where <your-conda-env-name-here> represents the name of your conda environment. To sanity check, this folder should contain .../articledownloader/__init__.py and .../articledownloader/articledownloader.py. </strong>
-
+After finding your articledownloader install, you will have to replace two files, which are stored locally in this repo (under adjusted_article_downloader/). To do this, find where your article downloader install is. It is highly likely that it is at the following location:
+```python
+<anaconda-path>/envs/<conda-env-name>/lib/python3.6/site-packages/articledownloader/
+``` 
+Then, replace the two files under that path. We need to replace two scripts (articledownloader.py & scrapers.py), which will be under articledownloader/ in the path you located above. Copy the files from text_mining_tools/adjusted_article_downloader/ to replace the equivalent files in the path above.
+```bash
+cp text_mining_tools/adjusted_article_downloader/* <anaconda-path>/envs/<conda-env-name>/lib/python3.6/site-packages/articledownloader/
+``` 
+If you installed inside of a conda environment (recommended!),  <conda-env-name> represents the name of your conda environment, and <anaconda-path> represents where your anaconda install is. 
+  
 Note: The first time you install the NLTK package, you will need to manually install subpackages. This can easily
 be done by opening up NLTK in a python terminal and doing the following imports.
 
