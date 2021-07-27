@@ -30,3 +30,9 @@ This will prompt you for the necessary downloads, after which you should be able
 Currently, python 3.6 is recommended for this package.
 
 *** Note: Please set aside a hard disk with plenty of space if you are planning automated downloads. ***
+
+We recommend installing stanza additionally for dependency parsing. 
+  
+```bash
+pip install stanza
+```
