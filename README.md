@@ -47,3 +47,11 @@ The first time stanza is installed, by default, models will not be installed. We
 import stanza
 stanza.download('en')
 ```  
+  
+If you choose to use pybliometrics to do abstract installs, you can install pybliometrics via pip.
+  
+```bash
+pip install pybliometrics
+```
+  
+You can then set up your Elsevier API Key using the following link: https://pybliometrics.readthedocs.io/en/stable/configuration.html, which would make abstract mining possible afterwards.
