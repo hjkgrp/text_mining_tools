@@ -12,7 +12,7 @@ Thus, while Science articles can be downloaded, they are not in HTML format and 
 
 ```bash
 # install dependencies with the following
-pip3 install -r requirements.txt 
+pip install -r requirements.txt 
 ```
 Next, install the package.
 ```bash
