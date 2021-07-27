@@ -4,7 +4,8 @@ from articledownloader.articledownloader import ArticleDownloader
 from pybliometrics.scopus import AbstractRetrieval
 from bs4 import BeautifulSoup, NavigableString
 from nltk import sent_tokenize
-import re, os
+import os
+import regex as re
 import pandas as pd
 """
 The article class takes in a DOI and a basepath for constructing a corpus.
