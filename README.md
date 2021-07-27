@@ -42,3 +42,8 @@ We recommend installing stanza additionally for dependency parsing.
 ```bash
 pip install stanza
 ```
+The first time stanza is installed, by default, models will not be installed. We want this for our pipelines. Thus, we need to run the following:
+```python
+import stanza
+stanza.download('en')
+```  
