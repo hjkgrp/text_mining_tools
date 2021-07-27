@@ -28,7 +28,7 @@ Then, replace the two files under that path. We need to replace two scripts (art
 ```bash
 cp text_mining_tools/adjusted_article_downloader/* <anaconda-path>/envs/<conda-env-name>/lib/python3.6/site-packages/articledownloader/
 ``` 
-If you installed inside of a conda environment (recommended!),  <conda-env-name> represents the name of your conda environment, and <anaconda-path> represents where your anaconda install is. 
+If you installed inside of a conda environment (recommended!),  \<conda-env-name\> represents the name of your conda environment, and \<anaconda-path\> represents where your anaconda install is. 
   
 Note: The first time you install the NLTK package, you will need to manually install subpackages. This can easily
 be done by opening up NLTK in a python terminal and doing the following imports.
