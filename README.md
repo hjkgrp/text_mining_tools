@@ -10,15 +10,21 @@ In addition to the classes, some tools reside in full_text_mine.py. This permits
 Currently, Wiley, ACS, RSC, Nature, and Science publications are supported by default. Only HTML/XML support is provided for mining.
 Thus, while Science articles can be downloaded, they are not in HTML format and thus cannot be mined, unless you can convert them to HTML. Be careful about this! Turning PDFs into mineable data is not a simple task. To proceed with your install, follow the instructions:
 
-```python
+```bash
 # install dependencies with the following
 pip3 install -r requirements.txt 
 ```
+Next, install the package.
+```bash
+# install the package with the following
+python setup.py develop
+```
+
 <strong>
-After finding your articledownloader install, you will have to replace two files, which are stored locally in this repo (under adjusted_article_downloader/. To do this, find where your article downloader install is. Then, replace the two files under that path. They should be replacing two scripts (articledownloader.py & scrapers.py), which will be under .../articledownloader/. If you installed inside of a conda environment (recommended!), "envs/<your-conda-env-name-here>" should be in your path, where <your-conda-env-name-here> represents the name of your conda environment. To sanity check, this folder should contain .../articledownloader/__init__.py and .../articledownloader/articledownloader.py. </strong>
+After finding your articledownloader install, you will have to replace two files, which are stored locally in this repo (under adjusted_article_downloader/). To do this, find where your article downloader install is (likely to be in <anaconda-path>/envs/<conda-env-name>/python3.6/site-packages/articledownloader). Then, replace the two files under that path. We need to replace two scripts (articledownloader.py & scrapers.py), which will be under articledownloader/ in the above path. Copy the files from adjusted_article_downloader/ to replace the equivalent files in <anaconda-path>/envs/<conda-env-name>/python3.6/site-packages/articledownloader. If you installed inside of a conda environment (recommended!), "envs/<your-conda-env-name-here>" should be in your path, where <your-conda-env-name-here> represents the name of your conda environment. To sanity check, this folder should contain .../articledownloader/__init__.py and .../articledownloader/articledownloader.py. </strong>
 
 Note: The first time you install the NLTK package, you will need to manually install subpackages. This can easily
-be done by opening up NLTK in a python and doing the following imports.
+be done by opening up NLTK in a python terminal and doing the following imports.
 
 ```python
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -30,3 +36,9 @@ This will prompt you for the necessary downloads, after which you should be able
 Currently, python 3.6 is recommended for this package.
 
 *** Note: Please set aside a hard disk with plenty of space if you are planning automated downloads. ***
+
+We recommend installing stanza additionally for dependency parsing. 
+  
+```bash
+pip install stanza
+```
