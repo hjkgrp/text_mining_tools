@@ -54,4 +54,4 @@ If you choose to use pybliometrics to do abstract installs, you can install pybl
 pip install pybliometrics
 ```
   
-You can then set up your Elsevier API Key using the following link: https://pybliometrics.readthedocs.io/en/stable/configuration.html, which would make abstract mining possible afterwards.
+You can then set up your Elsevier API Key using the following link: https://pybliometrics.readthedocs.io/en/stable/configuration.html, which would make abstract mining possible afterwards. The information for your Elsevier key will be stored in a config.ini file that is in a hidden folder (either .pybliometrics/ or .scopus/), that pybliometrics uses to automate abstract downloads.
