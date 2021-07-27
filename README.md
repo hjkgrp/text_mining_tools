@@ -30,14 +30,23 @@ cp text_mining_tools/adjusted_article_downloader/* <anaconda-path>/envs/<conda-e
 ``` 
 If you installed inside of a conda environment (recommended!),  \<conda-env-name\> represents the name of your conda environment, and \<anaconda-path\> represents where your anaconda install is. 
   
-Note: The first time you install the NLTK package, you will need to manually install subpackages. This can easily
-be done by opening up NLTK in a python terminal and doing the following imports.
+Note: The first time you install the NLTK package, you will need to manually install subpackages. 
+Open a python terminal and type the following:
+
+```python
+import nltk
+nltk.download('vader_lexicon')
+nltk.download('punkt')
+```
+
+You can check if your NLTK install will be good to go by opening up NLTK in a python terminal and doing the following imports.
 
 ```python
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 ```
+
 This will prompt you for the necessary downloads, after which you should be able to use the package freely. It may ask you to install the "punkt" package. Please follow the install recommendations that are spawned.
 
 Currently, python 3.6 is recommended for this package.
