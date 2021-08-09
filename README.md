@@ -62,7 +62,7 @@ import stanza
 stanza.download('en')
 ```  
   
-If you choose to use pybliometrics to do abstract installs, you can install pybliometrics via pip.
+If you choose to use pybliometrics to do manuscript abstract analysis, you can install pybliometrics via pip.
   
 ```bash
 pip install pybliometrics
