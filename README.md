@@ -24,7 +24,7 @@ After finding your articledownloader install, you will have to replace two files
 ```python
 <anaconda-path>/envs/<conda-env-name>/lib/python3.6/site-packages/articledownloader/
 ``` 
-Then, replace the two files under that path. We need to replace two scripts (articledownloader.py & scrapers.py), which will be under articledownloader/ in the path you located above. Copy the files from text_mining_tools/adjusted_article_downloader/ to replace the equivalent files in the path above.
+Then, replace the two files under that path. We need to replace two scripts (articledownloader.py & scrapers.py), which will be under articledownloader/ in the path you located above. Copy the files from text_mining_tools/adjusted_article_downloader/ to replace the equivalent files in the path above. This file move is only necessary if you plan on using the article class to mass download articles, instead of preparing your own corpus separately, and building your article classes from the pre-built corpus.
 ```bash
 cp text_mining_tools/adjusted_article_downloader/* <anaconda-path>/envs/<conda-env-name>/lib/python3.6/site-packages/articledownloader/
 ``` 
